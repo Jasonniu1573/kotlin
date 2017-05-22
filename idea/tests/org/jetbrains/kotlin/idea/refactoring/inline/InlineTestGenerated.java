@@ -539,6 +539,12 @@ public class InlineTestGenerated extends AbstractInlineTest {
             KotlinTestUtils.assertAllTestsPresentByMetadata(this.getClass(), new File("idea/testData/refactoring/inline/inlineVariableOrProperty"), Pattern.compile("^(\\w+)\\.kt$"), TargetBackend.ANY, true);
         }
 
+        @TestMetadata("AppendToCollection.kt")
+        public void testAppendToCollection() throws Exception {
+            String fileName = KotlinTestUtils.navigationMetadata("idea/testData/refactoring/inline/inlineVariableOrProperty/AppendToCollection.kt");
+            doTest(fileName);
+        }
+
         @TestMetadata("Basic.kt")
         public void testBasic() throws Exception {
             String fileName = KotlinTestUtils.navigationMetadata("idea/testData/refactoring/inline/inlineVariableOrProperty/Basic.kt");
