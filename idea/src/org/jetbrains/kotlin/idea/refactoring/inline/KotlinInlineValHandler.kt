@@ -80,9 +80,9 @@ class KotlinInlineValHandler : InlineActionHandler() {
 
         val (referenceExpressions, conflicts) = findUsages(declaration)
 
-        if (referenceExpressions.isEmpty()) {
+        if (referenceExpressions.isEmpty() && conflicts.isEmpty) {
             val kind = if (declaration.isLocal) "Variable" else "Property"
-            return showErrorHint(project, editor, "$kind '$name' is never used") //TODO: foreign usages!
+            return showErrorHint(project, editor, "$kind '$name' is never used")
         }
 
         val referencesInOriginalFile = referenceExpressions.filter { it.containingFile == file }
