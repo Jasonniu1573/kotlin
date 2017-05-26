@@ -105,7 +105,8 @@ class KotlinInlineValHandler : InlineActionHandler() {
 
         if (!conflicts.isEmpty) {
             val conflictsCopy = conflicts.copy()
-            conflictsCopy.putValue(null, "The following usages are not supported by the Inline refactoring. They won't be processed.")
+            val allOrSome = if (referenceExpressions.isEmpty()) "All" else "The following"
+            conflictsCopy.putValue(null, "$allOrSome usages are not supported by the Inline refactoring. They won't be processed.")
 
             project.checkConflictsInteractively(conflictsCopy) {
                 performRefactoring(declaration, readReplacement, writeReplacement, assignmentToDelete, editor, hasHighlightings)
