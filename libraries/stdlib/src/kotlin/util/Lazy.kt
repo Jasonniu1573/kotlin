@@ -205,6 +205,6 @@ private class SafePublicationLazyImpl<out T>(initializer: () -> T) : Lazy<T>, Se
         private val valueUpdater = java.util.concurrent.atomic.AtomicReferenceFieldUpdater.newUpdater(
                 SafePublicationLazyImpl::class.java,
                 Any::class.java,
-                "_value")
+                SafePublicationLazyImpl<*>::_value.name)
     }
 }

@@ -4,9 +4,20 @@ import org.junit.Test
 import kotlin.test.*
 import kotlin.properties.*
 
-class NotNullVarTest() {
-    @Test fun doTest() {
+class LateInitDelegatesTest {
+    @Test fun notNull() {
         NotNullVarTestGeneric("a", "b").doTest()
+    }
+
+    @Test fun initOnce() {
+        val obj = object {
+            var a: String by Delegates.initOnce()
+        }
+
+        assertFailsWith<IllegalStateException> { obj.a }
+        obj.a = "test"
+        assertEquals("test", obj.a)
+        assertFailsWith<IllegalStateException> { obj.a = "another" }
     }
 }
 
@@ -15,6 +26,8 @@ private class NotNullVarTestGeneric<T : Any>(val a1: String, val b1: T) {
     var b by Delegates.notNull<T>()
 
     public fun doTest() {
+        assertFailsWith<IllegalStateException> { a }
+        assertFailsWith<IllegalStateException> { b }
         a = a1
         b = b1
         assertTrue(a == "a", "fail: a should be a, but was $a")
